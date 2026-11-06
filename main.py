@@ -1,7 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, HTTPException
 from pydantic import BaseModel
 import pyarabic.araby as araby
 from tashaphyne.stemming import ArabicLightStemmer
+from sqlalchemy.orm import Session
+from sqlalchemy import text
+from app.database import get_db       
 
 app = FastAPI(
     title="Juzur API",
@@ -36,6 +39,14 @@ class TextRequest(BaseModel):
 @app.get("/")
 def read_root():
     return {"status": "l'API est en ligne", "message": "l'API est fonctionnelle"}
+
+@app.get("/health/db")
+def health_db(db: Session = Depends(get_db)):
+    try:
+        db.execute(text("SELECT 1"))
+        return {"status": "ok", "database": "connectée à PostgreSQL"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erreur BDD: {str(e)}")
 
 
 @app.post("/analyze")
