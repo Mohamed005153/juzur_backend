@@ -74,5 +74,5 @@ def analyze_text(payload: TextRequest):
         "original_text": raw_text,       # Texte de départ intact
         "clean_text": clean_text,        # Texte sans voyelles
         "word_count": len(words),        # Nombre de mots
-        "analysis": analysis_results     # Tableau contenant le détail morphologique par mot
+        "analysis": analysis_results     
     }
