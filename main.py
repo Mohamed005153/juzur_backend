@@ -4,7 +4,8 @@ import pyarabic.araby as araby
 from tashaphyne.stemming import ArabicLightStemmer
 from sqlalchemy.orm import Session
 from sqlalchemy import text
-from app.database import get_db       
+from app.database import get_db  
+from fastapi.responses import JSONResponse     
 
 app = FastAPI(
     title="Juzur API",
@@ -46,7 +47,16 @@ def health_db(db: Session = Depends(get_db)):
         db.execute(text("SELECT 1"))
         return {"status": "ok", "database": "connectée à PostgreSQL"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erreur BDD: {str(e)}")
+        # Capture propre sans planter sur les caractères Windows-1252
+        try:
+            err_str = str(e)
+        except UnicodeDecodeError:
+            err_str = "Échec d'authentification ou base de données 'juzur_db' introuvable dans PostgreSQL"
+        
+        return JSONResponse(
+            status_code=500, 
+            content={"detail": f"Erreur BDD: {err_str}"}
+        )
 
 
 @app.post("/analyze")
