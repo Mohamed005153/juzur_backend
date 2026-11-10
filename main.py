@@ -4,8 +4,11 @@ import pyarabic.araby as araby
 from tashaphyne.stemming import ArabicLightStemmer
 from sqlalchemy.orm import Session
 from sqlalchemy import text
-from app.database import get_db  
-from fastapi.responses import JSONResponse     
+from app.database import get_db , engine
+import app.models
+from fastapi.responses import JSONResponse  
+
+app.models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Juzur API",
