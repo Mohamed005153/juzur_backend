@@ -51,7 +51,7 @@ def health_db(db: Session = Depends(get_db)):
         try:
             err_str = str(e)
         except UnicodeDecodeError:
-            err_str = "Échec d'authentification ou base de données 'juzur_db' introuvable dans PostgreSQL"
+            err_str = "Échec d'authentification ou base de données 'juzur_db' nontrouvable dans PostgreSQL"
         
         return JSONResponse(
             status_code=500, 
