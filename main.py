@@ -79,7 +79,7 @@ def analyze_text(payload: TextRequest):
             "root": stemmer.get_root()                  # Racine supposée (ex: خرج)
         })
     
-    # 5) Réponse JSON complète renvoyée au client
+    # 5) Réponse JSON complète qui est renvoyée au client
     return {
         "original_text": raw_text,       # Texte de départ intact
         "clean_text": clean_text,        # Texte sans voyelles
