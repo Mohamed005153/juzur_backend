@@ -65,7 +65,7 @@ def analyze_text(payload: TextRequest):
     clean_text = araby.strip_tashkeel(raw_text)         # 2) Nettoyage : Suppression des voyelles (Tashkeel)
     words = araby.tokenize(clean_text)                  # 3) Tokenisation : Découpage mot par mot en liste
     
-    # 4) Analyse morphologique avec Tashaphyne
+    # 4) Analyse morphologique avec Tashaphynes
     analysis_results = []                               # Liste vide qui va stocker l'analyse de chaque mot
     
     for word in words:
